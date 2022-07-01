@@ -5,8 +5,9 @@ import Views from '../../components/Views/Views';
 const FullViews=()=>{
 
 
-return(<ConDiv >
+return(<ConDiv>
   <Routes>
+  
     <Route path=':id' element={<Views/>}/>
   </Routes>
 

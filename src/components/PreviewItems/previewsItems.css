@@ -6,10 +6,10 @@
   margin: auto;
   margin-bottom:5rem;
   position: relative;
-  background-image:linear-gradient(to right,rgba(2, 0, 0, 0.457),rgba(2, 56, 25, 0.425));
+  background-image:linear-gradient(to right,rgba(2, 0, 0, 0.614),rgb(26, 44, 63));
   height: 500px;
 padding:1rem 0px;
-border-top: 2px solid rgb(2, 45, 12);
+border-top: 2px solid rgb(48, 70, 92);
 color: rgb(65, 83, 73);
 
 

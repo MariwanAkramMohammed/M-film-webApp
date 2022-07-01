@@ -183,7 +183,7 @@ const Data_ToShow = {
         name: "Barbarians",
 
         image_item:
-          "https://pics.filmaffinity.com/barbaren-918771969-large.jpg",
+          "https://flxt.tmsimg.com/assets/p18875224_i_v8_ac.jpg",
         description:
           "In 2019, Jonas emerges from the cave into a strange but familiar world in which the town of Winden is reeling from the recent disappearance of a young boy.",
       },

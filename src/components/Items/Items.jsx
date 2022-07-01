@@ -1,18 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import ItemButton from "../Custom/ItemButton";
-
+import Bounce from 'react-reveal/Bounce';
 const Item = ({ item }) => {
   const { image, name, image_item } = item;
 
-
   return (
+
     <ItemContainer image={image_item ? image_item : image}>
       <List_con className="list">
         <h1>{name}</h1>
         <ItemButton />
       </List_con>
     </ItemContainer>
+
   );
 };
 export default Item;

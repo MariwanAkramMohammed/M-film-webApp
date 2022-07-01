@@ -9,3 +9,5 @@ export const MoveisSelect = createSelector(
 );
 export const CollectionDataSelector = (paramId) =>
   createSelector(All_Data, (Data) => Data.Data_Show[paramId]);
+  
+export const ListSelector=createSelector(All_Data,Data=>Object.keys(Data.Data_Show));

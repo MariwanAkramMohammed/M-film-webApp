@@ -5,10 +5,11 @@ import "./previewsItems.css";
 import styled from "styled-components";
 import {Link}from 'react-router-dom';
 
+
 const PreviewItem = ({collection}) => {
   // real data
 const {title,items,Route_Url}=collection;
-console.log(Route_Url)
+
   const [ImageIndex, setImageindex] = useState(0);
   const NextArrow = ({ onClick }) => {
     return <div className="arrow2 next2" onClick={onClick}></div>;
@@ -43,8 +44,11 @@ console.log(Route_Url)
   <Title to={Route_Url} >{title}</Title>
       <Slider {...Setting}>
         {items.map((item, index) => (
+          
           <div className={"slide2"}>
+       
             <Item key={index} item={item} />
+     
           </div>
         ))}
       </Slider>
@@ -57,10 +61,10 @@ const Title=styled(Link)`
 text-transform: uppercase;
 letter-spacing: 3px;
 text-decoration: none;
-color:rgb(26, 87, 13);
+color:rgb(53, 76, 99);
 font-weight: 800;
 &:hover{
-  color:rgb(28, 135, 4);
+  color:rgb(71, 91, 112);
 
 }
 `
