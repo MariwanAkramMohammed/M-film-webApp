@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import LinearScaleOutlinedIcon from "@mui/icons-material/LinearScaleOutlined";
-
+import { ShowCardAction } from "../../Redux/CrdReducer/CardAction";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { ShowSelector } from "../../Redux/NavReduce/NavSelector";
 import { NavAction } from "../../Redux/NavReduce/NavAction";
 import MenuList2 from "../MenuList2/Menulist2";
-const Header = ({ Show, dispatch }) => {
+import Acount from "../Acount/Acount";
+import { CardSelector } from "../../Redux/CrdReducer/CardSelector";
+
+const Header = ({ Show, MenuShow, dispatch }) => {
+  // console.log(Show);
   return (
     <ContainerDiv>
       <Div>
@@ -16,7 +20,8 @@ const Header = ({ Show, dispatch }) => {
           <img src="/imgs/favicon2.png" className="logo" />
         </Link_To>
         <NavDiv>
-          <Link_To to="/sign">Sign in</Link_To>
+          <LogDiv onClick={() => dispatch(ShowCardAction())}>LOG IN</LogDiv>
+          {MenuShow && <ConMenu onClick={() => dispatch(NavAction())} />}
           <Menu onClick={() => dispatch(NavAction())}>
             <LinearScaleOutlinedIcon
               className="icon"
@@ -26,15 +31,44 @@ const Header = ({ Show, dispatch }) => {
         </NavDiv>
       </Div>
       <MenuList2 />
+
+      {Show && <Con onClick={() => dispatch(ShowCardAction())} />}
+
+      <Acount Show={Show} />
     </ContainerDiv>
   );
 };
 
 const MapstateToProps = createStructuredSelector({
-  Show: ShowSelector,
+  Show: CardSelector,
+  MenuShow: ShowSelector,
 });
 export default connect(MapstateToProps)(Header);
-
+const Con = styled.div`
+  position: absolute;
+  top: 62px;
+  right: 0;
+  background-image: linear-gradient(
+    to right,
+    rgba(3, 0, 0, 0),
+    rgba(51, 77, 94, 0.932)
+  );
+  width: 100%;
+  height: 100vh;
+`;
+const ConMenu = styled.div`
+  z-index: -1;
+  position: absolute;
+  top: 160px;
+  right: 0;
+  background-image: linear-gradient(
+    to right,
+    rgba(3, 0, 0, 0),
+    rgba(51, 77, 94, 0.932)
+  );
+  width: 100%;
+  height: 100vh;
+`;
 const Menu = styled.div`
   cursor: pointer;
   // margin-left: auto;
@@ -86,9 +120,22 @@ const Div = styled.div`
   }
 `;
 const Link_To = styled(Link)`
-text-decoration: none;
-color:white;
-text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const LogDiv = styled.div`
+  cursor: pointer;
+  // text-decoration: none;
+  color: white;
+  text-transform: uppercase;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 1.4px;
@@ -97,11 +144,10 @@ text-transform: uppercase;
   justify-content: center;
 `;
 const NavDiv = styled.div`
-
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap:20px;
+  gap: 20px;
 
   width: 30%;
   margin: 0 10px;

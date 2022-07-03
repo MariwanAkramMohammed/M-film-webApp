@@ -7,8 +7,8 @@ import PreviewItem from "../../components/PreviewItems/previewItems";
 import styled from "styled-components";
 function Home({ Collections }) {
   return (
-    <CONdiv>
-      <SliderPage />
+    <CONdiv >
+      <SliderPage   />
       {Collections.map((collection, index) => (
         <PreviewItem key={index} collection={collection} />
       ))}

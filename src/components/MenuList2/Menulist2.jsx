@@ -15,7 +15,7 @@ const MenuList2 = ({ Collections, Show }) => {
     series:<LiveTvIcon style={{ fill: "white", fontSize: 30 }}/>
   }
   return (
-    <DIVcon className="man" Show={Show}>
+    <DIVcon Show={Show}>
       <ul>
         {Collections.map((element, index) => {
           return (

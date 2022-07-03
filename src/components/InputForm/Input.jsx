@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-const InputForm = ({ type, value, onChangeValue, title, name, }) => {
+const InputForm = ({ type, value, onChangeValue, title, name }) => {
   const input = {
     email: "email",
     pass: "password",
     Change: "",
     title: "email",
   };
+
   return (
     <ConDiv>
       <Input

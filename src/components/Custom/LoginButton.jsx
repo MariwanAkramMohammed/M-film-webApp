@@ -4,9 +4,10 @@ import { SignWithGoogle } from "../../firebase/firebase";
 
 const LoginButton = ({ children = "sign in", sign ,Click}) => {
   return (
-    <button className={`${sign ? "sign" : "gog"} btn` }   onClick={()=>Click?SignWithGoogle():null}>{children}</button>
+    <ButtonDiv className={`${sign ? "sign" : "gog"} btn` }   onClick={()=>Click?SignWithGoogle():null}>{children}</ButtonDiv>
   );
 };
+// SyntheticEvent onclick onfucos
 
 export default LoginButton;
 const ButtonDiv = styled.button`

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import InputForm from "../InputForm/Input";
 import LoginButton from "../Custom/LoginButton";
-import {SignWithGoogle}from '../../firebase/firebase';
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -17,16 +18,30 @@ class SignIn extends Component {
     const value = event.target.value;
     this.setState({ [name]: value });
   };
-  submit = (event) => {
+  // logout=()=>{
+  //   signOut(auth);
+  //   alert('you signed out')
+  // }
+  submit = async (event) => {
     event.preventDefault();
     const { email, password } = this.state;
-    console.log(email, "    -     ", password);
+    if (email && password) {
+      await signInWithEmailAndPassword(auth, email, password);
+
+      alert("successfull ");
+    } else {
+      alert("your fields are empty ! check them again ");
+    }
+    return this.setState({
+      email: "",
+      password: "",
+    });
   };
   render() {
     return (
       <ConTainer className="login">
         <DivCon>
-          <h1>LOGIN</h1>
+          <h1>SIGN IN</h1>
           <FormDiv onSubmit={this.submit}>
             <ListDiv>
               <InputForm
@@ -51,6 +66,7 @@ class SignIn extends Component {
             </LoginButton>
           </FormDiv>
           <LoginButton Click={true}>Login with google</LoginButton>
+          {/* <button onClick={this.logout}>logout</button> */}
         </DivCon>
       </ConTainer>
     );
@@ -66,7 +82,7 @@ const ConTainer = styled.div`
   align-items: center;
 `;
 const DivCon = styled.div`
-  width: 500px;
+  width: 33vw;
   height: 80vh;
   background: rgb(40, 48, 56);
   border-radius: 30px;
