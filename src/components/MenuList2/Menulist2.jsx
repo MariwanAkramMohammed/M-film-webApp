@@ -3,17 +3,17 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
-import LiveTvIcon from '@mui/icons-material/LiveTv';
+import LiveTvIcon from "@mui/icons-material/LiveTv";
 
 import { useNavigate } from "react-router-dom";
 import { ShowSelector } from "../../Redux/NavReduce/NavSelector";
 import { CollectionSelect } from "../../Redux/AllDatas/ALLDataSelector";
 const MenuList2 = ({ Collections, Show }) => {
   const LinkTo = useNavigate();
-  const Icon={
-    movies:<SlideshowIcon style={{ fill: "white", fontSize: 30 }}/>,
-    series:<LiveTvIcon style={{ fill: "white", fontSize: 30 }}/>
-  }
+  const Icon = {
+    movies: <SlideshowIcon style={{ fill: "white", fontSize: 30 }} />,
+    series: <LiveTvIcon style={{ fill: "white", fontSize: 30 }} />,
+  };
   return (
     <DIVcon Show={Show}>
       <ul>
@@ -21,7 +21,7 @@ const MenuList2 = ({ Collections, Show }) => {
           return (
             <li onClick={() => LinkTo(element.Route_Url)}>
               <div>{Icon[element.title]}</div>
-              
+
               <p className="textlink">{element.title}</p>
             </li>
           );
@@ -83,7 +83,7 @@ const DIVcon = styled.div`
     font-weight: 500;
     color: rgb(202, 203, 202);
     letter-spacing: 2px;
-    font-size:14px;
+    font-size: 14px;
   }
 
   & ul li:hover {
@@ -91,7 +91,13 @@ const DIVcon = styled.div`
     color: rgb(232, 238, 244);
     border-bottom: 1px solid rgb(6, 198, 6);
 
-    background-image: linear-gradient(to top,rgba(6, 198, 6, 0.404),rgba(11, 91, 11, 0.299),rgba(24, 27, 24, 0.6),rgba(16, 17, 19, 0.541),rgba(16, 17, 19, 0.541)
-  )
+    background-image: linear-gradient(
+      to top,
+      rgba(6, 198, 6, 0.404),
+      rgba(11, 91, 11, 0.299),
+      rgba(24, 27, 24, 0.6),
+      rgba(16, 17, 19, 0.541),
+      rgba(16, 17, 19, 0.541)
+    );
   }
 `;

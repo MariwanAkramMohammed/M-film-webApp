@@ -2,26 +2,39 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import LinearScaleOutlinedIcon from "@mui/icons-material/LinearScaleOutlined";
-import { ShowCardAction } from "../../Redux/CrdReducer/CardAction";
+import {
+  ShowCardAction,
+  ShowProCardAction,
+} from "../../Redux/CrdReducer/CardAction";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { ShowSelector } from "../../Redux/NavReduce/NavSelector";
 import { NavAction } from "../../Redux/NavReduce/NavAction";
 import MenuList2 from "../MenuList2/Menulist2";
 import Acount from "../Acount/Acount";
-import { CardSelector } from "../../Redux/CrdReducer/CardSelector";
+import {
+  CardSelector,
+  ProShowSelector,
+} from "../../Redux/CrdReducer/CardSelector";
+import { Current_UserSelector } from "../../Redux/UserReducer/UserSelector";
+import Profile from "../Profile/Profile";
 
-const Header = ({ Show, MenuShow, dispatch }) => {
-  // console.log(Show);
+const Header = ({ Show, MenuShow, currentUser, dispatch, ProShow }) => {
+  const activeUser = Object.keys(currentUser).length;
   return (
     <ContainerDiv>
       <Div>
-        <Link_To to="/">
+        <LinkTo to="/">
           <img src="/imgs/favicon2.png" className="logo" />
-        </Link_To>
+        </LinkTo>
         <NavDiv>
-          <LogDiv onClick={() => dispatch(ShowCardAction())}>LOG IN</LogDiv>
-          {MenuShow && <ConMenu onClick={() => dispatch(NavAction())} />}
+          {activeUser ? (
+            <LogDiv onClick={() => dispatch(ShowProCardAction())}>
+              <UserIcon src={currentUser.photo} />
+            </LogDiv>
+          ) : (
+            <LogDiv onClick={() => dispatch(ShowCardAction())}>LOG IN</LogDiv>
+          )}
           <Menu onClick={() => dispatch(NavAction())}>
             <LinearScaleOutlinedIcon
               className="icon"
@@ -30,11 +43,14 @@ const Header = ({ Show, MenuShow, dispatch }) => {
           </Menu>
         </NavDiv>
       </Div>
+      {MenuShow && <ConMenu onClick={() => dispatch(NavAction())} />}
       <MenuList2 />
 
       {Show && <Con onClick={() => dispatch(ShowCardAction())} />}
 
       <Acount Show={Show} />
+      {ProShow && <Con onClick={() => dispatch(ShowProCardAction())} />}
+      <Profile ProShow={ProShow} />
     </ContainerDiv>
   );
 };
@@ -42,11 +58,13 @@ const Header = ({ Show, MenuShow, dispatch }) => {
 const MapstateToProps = createStructuredSelector({
   Show: CardSelector,
   MenuShow: ShowSelector,
+  currentUser: Current_UserSelector,
+  ProShow: ProShowSelector,
 });
 export default connect(MapstateToProps)(Header);
 const Con = styled.div`
   position: absolute;
-  top: 62px;
+  top: 0px;
   right: 0;
   background-image: linear-gradient(
     to right,
@@ -119,8 +137,7 @@ const Div = styled.div`
     cursor: pointer;
   }
 `;
-const Link_To = styled(Link)`
-  cursor: pointer;
+const LinkTo = styled(Link)`
   text-decoration: none;
   color: white;
   text-transform: uppercase;
@@ -151,4 +168,10 @@ const NavDiv = styled.div`
 
   width: 30%;
   margin: 0 10px;
+`;
+const UserIcon = styled.img`
+  cursor: pointer;
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
 `;

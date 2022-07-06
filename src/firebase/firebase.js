@@ -6,6 +6,9 @@ import {
   getDoc,
   addDoc,
   setDoc,
+  getDocs,
+  query,
+  where,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -28,6 +31,7 @@ export const SignWithGoogle = () => {
 
 export const UserDocument = async (userData) => {
   const { email, photoURL, uid, displayName } = userData;
+
   const photo =
     photoURL ||
     "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg";
@@ -50,4 +54,90 @@ export const UserDocument = async (userData) => {
     return DocRef;
   }
   return DocRef;
+};
+
+const Data_Obj = {};
+const Data_Normalize = (key, rest) => {
+  Data_Obj[key] = rest;
+};
+const Data_Item = (catigory, key, items) => {
+  Data_Obj[catigory][key] = items;
+};
+
+export const GetDataFb = async () => {
+  const items = [];
+  const ref = query(collection(db, "Data"), where("title", "==", "movies"));
+  const sub_col_ref = collection(db, "Data/movies/items");
+  const All_Docs_Array = await getDocs(ref);
+
+  All_Docs_Array.forEach((doc) => {
+    Data_Normalize(doc.id, { ...doc.data() });
+  });
+
+  const All_items = await getDocs(sub_col_ref);
+  All_items.forEach((item) => {
+    items.push(item.data());
+  });
+
+  Data_Item("movies", "items", items);
+  Finish_Data();
+};
+
+async function Finish_Data() {
+  const items = [];
+  const ref = query(collection(db, "Data"), where("title", "==", "series"));
+  const All_Doc = await getDocs(ref);
+  All_Doc.forEach((doc) => {
+    Data_Normalize(doc.id, { ...doc.data() });
+  });
+  const sub_col_ref = collection(db, "Data/series/items");
+  const All_Items = await getDocs(sub_col_ref);
+  All_Items.forEach((item) => {
+    items.push(item);
+  });
+
+  await Data_Item("series", "items", items);
+  return Data_Obj;
+}
+
+// data to backend
+const Data = {
+  series: {
+    id: 2,
+    title: "series",
+    Route_Url: "/view/series",
+    items: [
+      {
+        id: 21,
+        name: "Squid Game",
+        image:
+          "https://beechacres.org/wp-content/uploads/2021/11/p20492218_b_h9_aa.jpg",
+        image_item:
+          "https://assets.gadgets360cdn.com/pricee/assets/product/202110/squid_game_1634103663.jpg",
+        description:
+          "Hoping to win easy money, a desperate Gi-hun agrees to take part in an enigmatic game; not long into the first round, unforeseen horrors unfold.",
+      },
+    ],
+  },
+};
+
+export const SendDataOnce = async () => {
+  const Datas = Object.keys(Data).map((key) => Data[key]);
+  Datas.map(async (element) => {
+    const SubCollection = collection(db, `Data/${element.title}/items`);
+    element.items.map(async (item) => {
+      const docRef = doc(SubCollection);
+      const snap = await getDoc(docRef);
+      if (!snap.exists()) {
+        try {
+          await setDoc(docRef, { ...item });
+          console.log("done");
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    });
+  });
+
+  // const DocDataRef=doc(CollectionRef,)
 };

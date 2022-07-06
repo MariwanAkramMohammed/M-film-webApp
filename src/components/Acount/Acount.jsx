@@ -2,20 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import imgback from "../../assets/account2.png";
 import { Link } from "react-router-dom";
-import { CardSelector } from "../../Redux/CrdReducer/CardSelector";
+
 
 const Acount = ({ Show }) => {
-  console.log(Show);
+
   const url = "https://www.crosswordarchive.org/images/avatar.jpg";
   return (
     <DinCon Show={Show}>
       <BackDIV src={imgback}></BackDIV>
       <Pro src={url} />
       <DIVLIST>
-        <LinkTo to="/sign" className="man">
+        <LinkTo to="/sign" >
           SIGN IN
         </LinkTo>
-        <LinkTo to="/sign-up">SIGN UP</LinkTo>
+        <LinkTo to="/sign-up" >
+          SIGN UP
+        </LinkTo>
+       
       </DIVLIST>
     </DinCon>
   );
@@ -35,7 +38,7 @@ const DinCon = styled.div`
   border: 4px solid rgb(187, 196, 198);
 
   backdrop-filter: blur(2px);
-  transition: all 2s;
+  transition: all 0.5s;
   transform: ${(props) =>
     props.Show ? `translateX(-70PX)` : `translateX(100%)`};
   padding: 15px 15px 15px 15px;

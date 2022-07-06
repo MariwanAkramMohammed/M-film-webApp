@@ -1,7 +1,8 @@
 import { UserType } from "./UserTypeAction";
 
 const Initial_state={
-  current_user:null
+  current_user:null,
+  man:'akram'
 }
  const Current_User=(state=Initial_state,action)=>{
   switch(action.type){
