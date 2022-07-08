@@ -7,8 +7,8 @@ const ItemButton = ({ children = "Watch Now" }) => {
 export default ItemButton;
 const ButtonCont = styled.button`
 
-  width: 85%;
-  height: 30%;
+  width: 70%;
+  height: 100%;
   border-radius: 5px;
   
   text-transform: uppercase;
@@ -19,23 +19,17 @@ const ButtonCont = styled.button`
   cursor: pointer;
   transition: transform 1s;
 
-  opacity: 0.78;
+  opacity: 0.80;
   background-image: linear-gradient(
     to right,
-    rgb(255, 143, 14),
-    rgb(255, 94, 8),
-    rgb(247, 63, 1)
+    rgb(0, 240, 0),
+    rgb(0, 129, 0)
   );
   &:hover {
     transform: scale(1.05);
-    opacity:0.9;
+    opacity:0.95;
   
-    background-image: linear-gradient(
-      to right,
-      rgb(255, 171, 14),
-      rgb(255, 94, 8),
-  
-    );
+
   }
 `;
 

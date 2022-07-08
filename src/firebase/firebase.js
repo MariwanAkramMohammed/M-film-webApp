@@ -80,64 +80,104 @@ export const GetDataFb = async () => {
   });
 
   Data_Item("movies", "items", items);
-  Finish_Data();
+  const Data = await Finish_Data();
+
+  return Data;
 };
 
 async function Finish_Data() {
   const items = [];
   const ref = query(collection(db, "Data"), where("title", "==", "series"));
   const All_Doc = await getDocs(ref);
-  All_Doc.forEach((doc) => {
+  All_Doc.forEach(async (doc) => {
     Data_Normalize(doc.id, { ...doc.data() });
   });
   const sub_col_ref = collection(db, "Data/series/items");
   const All_Items = await getDocs(sub_col_ref);
   All_Items.forEach((item) => {
-    items.push(item);
+    items.push(item.data());
   });
 
   await Data_Item("series", "items", items);
+
   return Data_Obj;
 }
 
-// data to backend
-const Data = {
-  series: {
-    id: 2,
-    title: "series",
-    Route_Url: "/view/series",
-    items: [
-      {
-        id: 21,
-        name: "Squid Game",
-        image:
-          "https://beechacres.org/wp-content/uploads/2021/11/p20492218_b_h9_aa.jpg",
-        image_item:
-          "https://assets.gadgets360cdn.com/pricee/assets/product/202110/squid_game_1634103663.jpg",
-        description:
-          "Hoping to win easy money, a desperate Gi-hun agrees to take part in an enigmatic game; not long into the first round, unforeseen horrors unfold.",
-      },
-    ],
-  },
-};
+export async function AddItemToDb(
+  name,
+  image_item,
+  image,
+  description,
+  catigory
+) {
+  // {
+  //   id: 21,
+  //   name: "Squid Game",
+  //   image:
+  //     "https://beechacres.org/wp-content/uploads/2021/11/p20492218_b_h9_aa.jpg",
+  //   image_item:
+  //     "https://assets.gadgets360cdn.com/pricee/assets/product/202110/squid_game_1634103663.jpg",
+  //   description:
+  //     "Hoping to win easy money, a desperate Gi-hun agrees to take part in an enigmatic game; not long into the first round, unforeseen horrors unfold.",
+  // }
+  if (catigory) {
+    const SubCol_Ref = collection(db, `Data/${catigory}/items`);
+    const Doc_Ref = doc(SubCol_Ref);
+    try {
+      await setDoc(Doc_Ref, {
+        id: Doc_Ref.id,
+        name,
+        image_item,
+        image,
+        description,
+      });
 
-export const SendDataOnce = async () => {
-  const Datas = Object.keys(Data).map((key) => Data[key]);
-  Datas.map(async (element) => {
-    const SubCollection = collection(db, `Data/${element.title}/items`);
-    element.items.map(async (item) => {
-      const docRef = doc(SubCollection);
-      const snap = await getDoc(docRef);
-      if (!snap.exists()) {
-        try {
-          await setDoc(docRef, { ...item });
-          console.log("done");
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    });
-  });
+      alert("succsed");
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    console.log("chosse catigory");
+  }
+}
 
-  // const DocDataRef=doc(CollectionRef,)
-};
+// const Data = {
+//   series: {
+//     id: 2,
+//     title: "series",
+//     Route_Url: "/view/series",
+//     items: [
+//       {
+//         id: 21,
+//         name: "Squid Game",
+//         image:
+//           "https://beechacres.org/wp-content/uploads/2021/11/p20492218_b_h9_aa.jpg",
+//         image_item:
+//           "https://assets.gadgets360cdn.com/pricee/assets/product/202110/squid_game_1634103663.jpg",
+//         description:
+//           "Hoping to win easy money, a desperate Gi-hun agrees to take part in an enigmatic game; not long into the first round, unforeseen horrors unfold.",
+//       },
+//     ],
+//   },
+// };
+
+// export const SendDataOnce = async () => {
+//   const Datas = Object.keys(Data).map((key) => Data[key]);
+//   Datas.map(async (element) => {
+//     const SubCollection = collection(db, `Data/${element.title}/items`);
+//     element.items.map(async (item) => {
+//       const docRef = doc(SubCollection);
+//       const snap = await getDoc(docRef);
+//       if (!snap.exists()) {
+//         try {
+//           await setDoc(docRef, { ...item });
+//           console.log("done");
+//         } catch (e) {
+//           console.log(e);
+//         }
+//       }
+//     });
+//   });
+
+// const DocDataRef=doc(CollectionRef,)
+// };

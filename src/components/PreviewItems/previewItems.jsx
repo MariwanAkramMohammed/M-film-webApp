@@ -3,12 +3,11 @@ import Slider from "react-slick";
 import Item from "../Items/Items";
 import "./previewsItems.css";
 import styled from "styled-components";
-import {Link}from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-
-const PreviewItem = ({collection}) => {
+const PreviewItem = ({ collection }) => {
   // real data
-const {title,items,Route_Url}=collection;
+  const { title, items, Route_Url } = collection;
 
   const [ImageIndex, setImageindex] = useState(0);
   const NextArrow = ({ onClick }) => {
@@ -41,14 +40,11 @@ const {title,items,Route_Url}=collection;
 
   return (
     <div className="SliderPage2">
-  <Title to={Route_Url} >{title}</Title>
+      <Title to={Route_Url}>{title}</Title>
       <Slider {...Setting}>
         {items.map((item, index) => (
-          
           <div className={"slide2"}>
-       
             <Item key={index} item={item} />
-     
           </div>
         ))}
       </Slider>
@@ -57,14 +53,13 @@ const {title,items,Route_Url}=collection;
 };
 
 export default PreviewItem;
-const Title=styled(Link)`
-text-transform: uppercase;
-letter-spacing: 3px;
-text-decoration: none;
-color:rgb(53, 76, 99);
-font-weight: 800;
-&:hover{
-  color:rgb(71, 91, 112);
-
-}
-`
+const Title = styled(Link)`
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-decoration: none;
+  color: rgb(53, 76, 99);
+  font-weight: 800;
+  &:hover {
+    color: rgb(71, 91, 112);
+  }
+`;

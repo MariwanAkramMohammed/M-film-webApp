@@ -6,15 +6,22 @@ import FullViews from "./Pages/FullViews/FullViews";
 import Home from "./Pages/Home/Home";
 import SignIn from "./components/Sign-IN/Sign_In";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, UserDocument,GetDataFb } from "./firebase/firebase";
+import { auth, UserDocument, GetDataFb } from "./firebase/firebase";
 import SignUp from "./components/Sign_Up/Sign_up";
 import { onSnapshot } from "firebase/firestore";
 import { connect } from "react-redux";
-
+import { createStructuredSelector } from "reselect";
+import { DataSelect } from "./Redux/AllDatas/ALLDataSelector";
+import { DataFetchAction } from "./Redux/AllDatas/DataAction";
 import { Current_User_Action } from "./Redux/UserReducer/UserAction";
+
 
 class App extends Component {
   unsub = null;
+  Fetch = async (dispatch) => {
+    const Data = await GetDataFb();
+    dispatch(DataFetchAction(Data));
+  };
   componentDidMount() {
     const { dispatch } = this.props;
     this.unsub = onAuthStateChanged(auth, async (user) => {
@@ -27,7 +34,7 @@ class App extends Component {
         });
       }
     });
-    GetDataFb()
+    this.Fetch(dispatch);
   }
   componentWillUnmount() {
     this.unsub = null;
@@ -37,8 +44,8 @@ class App extends Component {
       <div className="App">
         <Header />
         <Routes>
+
           <Route path="/" element={<Home />} />
-          {/* <Route path="/" element={<Acount />} /> */}
           <Route path="/sign" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/view/*" element={<FullViews />} />
@@ -47,5 +54,5 @@ class App extends Component {
     );
   }
 }
-
-export default connect(null)(App);
+const MapStateToProps = createStructuredSelector({ Data: DataSelect });
+export default connect(MapStateToProps)(App);

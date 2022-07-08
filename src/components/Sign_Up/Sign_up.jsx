@@ -5,6 +5,7 @@ import LoginButton from "../Custom/LoginButton";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -81,6 +82,8 @@ class SignUp extends Component {
             </ListDiv>
           </FormDiv>
         </DivCon>
+        
+
       </ConTainer>
     );
   }

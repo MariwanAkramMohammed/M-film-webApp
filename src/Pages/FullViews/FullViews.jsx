@@ -8,6 +8,8 @@ const FullViews = () => {
       <Routes>
         <Route path=":id" element={<Views />} />
       </Routes>
+
+
     </ConDiv>
   );
 };

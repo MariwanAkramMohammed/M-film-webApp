@@ -26,11 +26,16 @@ body {
     url("./assets/login.jpg");
 }
 
-/* .man{
-  background:rgba(79, 84, 85, 0.224);
-  border: 5px solid rgba(255, 255, 255, 0.071);
-  backdrop-filter: blur(2px);
- } */
+.add {
+  /* background-color: red; */
+  /* border-radius: 30px; */
+
+
+}
+input
 /* .test{
 z-index: 22;
  } */
+.man {
+  box-shadow: 0px 7px 5px 0px rgba(177, 226, 237, 0.699);
+}

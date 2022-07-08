@@ -1,7 +1,9 @@
 import { CardTypeAction } from "./CardActionType";
+import { AddCard } from "./CardUtil";
 const Initial_state = {
   hidden: false,
   ProShow: false,
+  FilmList: [],
 };
 const CardReducer = (state = Initial_state, action) => {
   switch (action.type) {
@@ -9,7 +11,8 @@ const CardReducer = (state = Initial_state, action) => {
       return { ...state, hidden: !state.hidden };
     case CardTypeAction.Card_Pro_Hidden:
       return { ...state, ProShow: !state.ProShow };
-
+    case CardTypeAction.Add_Film_To_List:
+      return { ...state, FilmList: AddCard(state.FilmList, action.payload) };
     default:
       return state;
   }

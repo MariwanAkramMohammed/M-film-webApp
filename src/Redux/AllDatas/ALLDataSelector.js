@@ -1,13 +1,20 @@
 import { createSelector } from "reselect";
 const All_Data = (state) => state.Data;
+
 export const CollectionSelect = createSelector(All_Data, (Data) =>
-Data?(Object.keys(Data.Data_Show).map((index) => Data.Data_Show[index])):[]
+  Data.Data_Db
+    ? Object.keys(Data.Data_Db).map((index) => Data.Data_Db[index])
+    : []
 );
-export const MoveisSelect = createSelector(
-  All_Data,
-  (Data) =>Data? Data.Data_Show.movies:{}
+
+export const DataSelect = createSelector(All_Data, (Data) =>
+  Data.Data_Db ? Data.Data_Db : {}
 );
 export const CollectionDataSelector = (paramId) =>
-  createSelector(All_Data, (Data) =>Data? Data.Data_Show[paramId]:{});
-  
-export const ListSelector=createSelector(All_Data,Data=>Object.keys(Data.Data_Show));
+  createSelector(All_Data, (Data) =>
+    Data.Data_Db ? Data.Data_Db[paramId] : {}
+  );
+
+export const ListSelector = createSelector(All_Data, (Data) =>
+  Data.Data_Show ? Object.keys(Data.Data_Show) : []
+);

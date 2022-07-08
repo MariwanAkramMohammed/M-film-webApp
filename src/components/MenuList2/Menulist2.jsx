@@ -33,6 +33,7 @@ const MenuList2 = ({ Collections, Show }) => {
 const MapStateToProps = createStructuredSelector({
   Collections: CollectionSelect,
   Show: ShowSelector,
+
 });
 export default connect(MapStateToProps)(MenuList2);
 

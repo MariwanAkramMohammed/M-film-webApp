@@ -1,22 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import ItemButton from "../Custom/ItemButton";
-import Bounce from 'react-reveal/Bounce';
-const Item = ({ item }) => {
+import { connect } from "react-redux";
+import { AddFilmToListAction } from "../../Redux/CrdReducer/CardAction";
+const Item = ({ item ,dispatch}) => {
   const { image, name, image_item } = item;
 
   return (
-
     <ItemContainer image={image_item ? image_item : image}>
       <List_con className="list">
         <h1>{name}</h1>
-        <ItemButton />
+
+        <X>
+          <ItemButton />
+          <AddButton onClick={()=>dispatch(AddFilmToListAction(item))} >+</AddButton>
+        </X>
       </List_con>
     </ItemContainer>
-
   );
 };
-export default Item;
+export default connect(null)(Item);
 
 const ItemContainer = styled.div`
   background-image: ${(props) =>
@@ -28,9 +31,7 @@ const ItemContainer = styled.div`
     rgba(255, 255, 255, 0.05),
     rgba(255, 255, 255, 0.1),
     rgba(255, 255, 255, 0.15)
-    
-    
-    100%,
+  100%,
     transparent 1000%
   ),url("${props.image}")`};
   margin: 2rem auto;
@@ -85,5 +86,30 @@ const List_con = styled.h1`
     font-size: 22px;
     font-weight: bold;
     color: white;
+  }
+`;
+const X = styled.div`
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: SPACE-AROUND;
+  align-items: center;
+`;
+const AddButton = styled.button`
+  width: 20%;
+  height: 100%;
+  border-radius: 5px;
+
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 1s;
+
+  opacity: 0.8;
+  background: RED;
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.95;
   }
 `;
